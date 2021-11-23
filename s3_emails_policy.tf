@@ -11,9 +11,10 @@ resource "aws_s3_bucket_policy" "my_emails" {
             },
             "Action": "s3:PutObject",
             "Resource": "${aws_s3_bucket.my_emails.arn}",
+            "Resource": "${aws_s3_bucket.my_emails.arn}/*",
             "Condition": {
                 "StringEquals": {
-                    "aws:SourceAccount": "${data.terraform_remote_state.base_state.outputs.account_id}"
+                    "aws:Referer": "${data.terraform_remote_state.base_state.outputs.account_id}"
                 }
             }
         }
